@@ -1,14 +1,18 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class Destroyer : MonoBehaviour
 {
-	private float _destroyThresholdY = -10f;
-
-	private void Update()
+	private void Awake()
 	{
-		if (transform.position.y < _destroyThresholdY)
+		if (GetComponent<Collider>().isTrigger == false)
 		{
-			Destroy(gameObject);
+			Debug.LogWarning($"{gameObject.name}: trigger is not enabled");
 		}
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		Destroy(other.gameObject);
 	}
 }
